@@ -1,0 +1,56 @@
+<h1>Controle de Gastos</h1>
+<h3>Saldo Atual: R$ {{saldo}}</h3>
+
+<a class="btn btn-success mb-3" href="/nova">+ Nova Transação</a>
+<a class="btn btn-secondary mb-3" href="/exportar">Exportar CSV</a>
+
+<canvas id="graficoGastos" width="400" height="200"></canvas>
+
+<table class="table mt-4">
+  <thead>
+    <tr>
+      <th>Descrição</th>
+      <th>Tipo</th>
+      <th>Categoria</th>
+      <th>Valor (R$)</th>
+      <th>Data</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each transacoes}}
+    <tr>
+      <td>{{this.descricao}}</td>
+      <td>{{this.tipo}}</td>
+      <td>{{this.categoria}}</td>
+      <td>{{this.valor}}</td>
+      <td>{{this.data}}</td>
+      <td>
+        <a class="btn btn-danger btn-sm" href="/excluir/{{this.id}}">Excluir</a>
+      </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+fetch('/grafico')
+  .then(res => res.json())
+  .then(dados => {
+    const ctx = document.getElementById('graficoGastos').getContext('2d')
+    const labels = dados.map(item => item._id)
+    const valores = dados.map(item => item.total)
+    new Chart(ctx, {
+      type: 'pie',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Gastos por Categoria',
+          data: valores,
+          backgroundColor: ['#f00', '#0f0', '#00f', '#ff0', '#0ff']
+        }]
+      }
+    })
+  })
+</script>
