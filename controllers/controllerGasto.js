@@ -18,13 +18,18 @@ exports.cria_get = (req, res) => {
 }
 
 exports.cria_post = async (req, res) => {
-    const transacao = req.body
-    transacao.valor = parseFloat(transacao.valor)
-    transacao.data = new Date(transacao.data)
+    const transacao = {
+        descricao: req.body.descricao,
+        categoria: req.body.categoria,
+        valor: parseFloat(req.body.valor),
+        observacao: req.body.observacao || "",
+        tipo: "despesa" // fixo
+    };
 
-    await gastos.cria(transacao)
-    res.redirect('/')
-}
+    await gastos.cria(transacao);
+    res.redirect('/');
+};
+
 
 exports.excluir = async (req, res) => {
     const id = parseInt(req.params.id)

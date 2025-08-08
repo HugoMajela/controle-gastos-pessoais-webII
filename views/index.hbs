@@ -10,10 +10,9 @@
   <thead>
     <tr>
       <th>Descrição</th>
-      <th>Tipo</th>
       <th>Categoria</th>
       <th>Valor (R$)</th>
-      <th>Data</th>
+      <th>Observações</th>
       <th>Ações</th>
     </tr>
   </thead>
@@ -21,10 +20,9 @@
     {{#each transacoes}}
     <tr>
       <td>{{this.descricao}}</td>
-      <td>{{this.tipo}}</td>
       <td>{{this.categoria}}</td>
       <td>{{this.valor}}</td>
-      <td>{{this.data}}</td>
+      <td>{{this.observacao}}</td>
       <td>
         <a class="btn btn-danger btn-sm" href="/excluir/{{this.id}}">Excluir</a>
       </td>
@@ -35,22 +33,22 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-fetch('/grafico')
-  .then(res => res.json())
-  .then(dados => {
-    const ctx = document.getElementById('graficoGastos').getContext('2d')
-    const labels = dados.map(item => item._id)
-    const valores = dados.map(item => item.total)
-    new Chart(ctx, {
-      type: 'pie',
-      data: {
-        labels: labels,
-        datasets: [{
-          label: 'Gastos por Categoria',
-          data: valores,
-          backgroundColor: ['#f00', '#0f0', '#00f', '#ff0', '#0ff']
-        }]
-      }
+  fetch('/grafico')
+    .then(res => res.json())
+    .then(dados => {
+      const ctx = document.getElementById('graficoGastos').getContext('2d')
+      const labels = dados.map(item => item._id)
+      const valores = dados.map(item => item.total)
+      new Chart(ctx, {
+        type: 'pie',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Gastos por Categoria',
+            data: valores,
+            backgroundColor: ['#f00', '#0f0', '#00f', '#ff0', '#0ff']
+          }]
+        }
+      })
     })
-  })
 </script>

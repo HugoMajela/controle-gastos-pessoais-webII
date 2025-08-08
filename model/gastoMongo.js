@@ -1,58 +1,57 @@
-const { MongoClient } = require('mongodb')
+const { MongoClient } = require('mongodb');
 
-const url = 'mongodb://localhost:27017/'
-let cliente
+const url = 'mongodb://localhost:27017/';
+let cliente;
+let db;
 
 async function conectar() {
-    if (!cliente) cliente = await MongoClient.connect(url)
-    return cliente.db('gastos')
+    if (!db) {
+        if (!cliente) cliente = await MongoClient.connect(url);
+        db = cliente.db('controle_gastos');
+    }
+    return db;
 }
 
 class GastoMongo {
     async cria(transacao) {
-        const db = await conectar()
-        const colecao = db.collection('transacoes')
+        const db = await conectar();
+        const gastos = db.collection('gastos');
 
-        if (!transacao.id) {
-            const maior = await colecao.find().sort({ id: -1 }).limit(1).toArray()
-            transacao.id = (maior[0]?.id || 0) + 1
-        }
+        // ID numérico sequencial
+        const maior = await gastos.find().sort({ id: -1 }).limit(1).toArray();
+        transacao.id = (maior[0]?.id || 0) + 1;
 
-        await colecao.insertOne(transacao)
+        await gastos.insertOne(transacao);
     }
 
     async lista() {
-        const db = await conectar()
-        return await db.collection('transacoes').find().sort({ data: -1 }).toArray()
+        const db = await conectar();
+        return await db.collection('gastos').find().sort({ id: -1 }).toArray();
     }
 
     async excluir(id) {
-        const db = await conectar()
-        await db.collection('transacoes').deleteOne({ id: id })
+        const db = await conectar();
+        await db.collection('gastos').deleteOne({ id: id });
     }
 
     async saldo() {
-        const db = await conectar()
-        const transacoes = await db.collection('transacoes').find().toArray()
-
-        return transacoes.reduce((total, t) => {
-            return total + (t.tipo === 'receita' ? t.valor : -t.valor)
-        }, 0)
+        const db = await conectar();
+        const transacoes = await db.collection('gastos').find().toArray();
+        return transacoes.reduce((total, t) => total - t.valor, 0);
     }
 
     async gastosPorCategoria() {
-        const db = await conectar()
+        const db = await conectar();
         const pipeline = [
-            { $match: { tipo: 'despesa' } },
             {
                 $group: {
                     _id: "$categoria",
                     total: { $sum: "$valor" }
                 }
             }
-        ]
-        return await db.collection('transacoes').aggregate(pipeline).toArray()
+        ];
+        return await db.collection('gastos').aggregate(pipeline).toArray();
     }
 }
 
-module.exports = new GastoMongo()
+module.exports = new GastoMongo();
