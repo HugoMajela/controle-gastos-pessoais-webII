@@ -48,4 +48,4 @@ O projeto atendeu aos objetivos propostos e demonstrou a aplicação prática do
 
 ---
 
-> Repositório criado com ❤️ por Luan e Hugo.
+> Repositório criado com ❤️ por Hugo e Luan.
