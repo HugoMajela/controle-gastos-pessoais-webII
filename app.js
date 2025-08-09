@@ -4,6 +4,7 @@ const logger = require('morgan')
 const cookieParser = require('cookie-parser')
 
 const rotasGastos = require('./routes/rotasGastos')
+const rotasUsuario = require('./routes/rotasUsuario')
 
 const app = express()
 app.set('views', path.join(__dirname, 'views'))
@@ -16,6 +17,7 @@ app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/', rotasGastos)
+app.use('/usuario', rotasUsuario)
 
 app.use((req, res) => {
     res.status(404).render('error', { message: "Página não encontrada" })

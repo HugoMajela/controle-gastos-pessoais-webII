@@ -1,6 +1,14 @@
 const gastos = require('../model/gastoMongo')
+const autenticacao = require('../autenticacao');
 
 exports.tela_principal = async (req, res) => {
+    const usuario = autenticacao.getUsuario();
+    if (!usuario) {
+        return res.redirect('/usuario/login');
+    }
+
+    req.usuario = usuario;
+
     const lista = await gastos.lista()
     const saldo = await gastos.saldo()
 
@@ -14,7 +22,7 @@ exports.tela_principal = async (req, res) => {
 }
 
 exports.cria_get = (req, res) => {
-    res.render('criarTransacao', {titulo_pagina: "Nova Transação"})
+    res.render('criarTransacao', { titulo_pagina: "Nova Transação" })
 }
 
 exports.cria_post = async (req, res) => {
