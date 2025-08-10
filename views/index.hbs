@@ -1,15 +1,17 @@
-<div class="container mx-auto">
+<div class="container mx-auto mt-5">
   <div class="row g-4">
     <!-- Coluna dos botões -->
     <div class="col-md-3">
       <div class="card p-4 shadow-sm rounded-5">
-        <a class="btn btn-success mb-3" href="/nova">+ Nova Transação</a>
-        <a class="btn btn-secondary mb-3" href="/exportar">Exportar CSV</a>
-        <a href="/usuario/logout" class="btn btn-danger mb-3">Logout</a>
+        <p class="font-logo text-center">Dashboard</p>
+        <p class="font-logo">Renda mensal: R$ {{saldo}}</p>
+        <a class="btn btn-success mb-3" href="/nova"><i class="bi bi-plus-square"></i> Nova Transação</a>
+        <a class="btn btn-secondary mb-3" href="/exportar"><i class="bi bi-box-arrow-down"></i> Exportar CSV</a>
+        <a href="/usuario/logout" class="btn btn-danger mb-3"><i class="bi bi-box-arrow-in-left"></i> Logout</a>
       </div>
 
       <div class="card p-4 shadow-sm rounded-5 mt-3">
-        <p class="text-center">Grafico de gastos</p>
+        <p class="font-logo text-center">Grafico de gastos</p>
         <canvas id="graficoGastos" width="400" height="200"></canvas>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
           <script>
@@ -56,7 +58,7 @@
                 <td>{{this.valor}}</td>
                 <td>{{this.observacao}}</td>
                 <td>
-                  <a class="btn btn-danger btn-sm" href="/excluir/{{this.id}}">Excluir</a>
+                  <a class="btn btn-danger btn-sm" href="/excluir/{{this.id}}"><i class="bi bi-x-circle"></i></a>
                 </td>
               </tr>
             {{/each}}
@@ -66,61 +68,3 @@
     </div>
   </div>
 </div>
-
-
-
-{{!-- <h1>Controle de Gastos</h1>
-<h3>Saldo Atual: R$ {{saldo}}</h3>
-
-<a class="btn btn-success mb-3" href="/nova">+ Nova Transação</a>
-<a class="btn btn-secondary mb-3" href="/exportar">Exportar CSV</a>
-<a href="/usuario/logout" class="btn btn-danger">Logout</a>
-
-<canvas id="graficoGastos" width="400" height="200"></canvas>
-
-<table class="table mt-4">
-  <thead>
-    <tr>
-      <th>Descrição</th>
-      <th>Categoria</th>
-      <th>Valor (R$)</th>
-      <th>Observações</th>
-      <th>Ações</th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#each transacoes}}
-    <tr>
-      <td>{{this.descricao}}</td>
-      <td>{{this.categoria}}</td>
-      <td>{{this.valor}}</td>
-      <td>{{this.observacao}}</td>
-      <td>
-        <a class="btn btn-danger btn-sm" href="/excluir/{{this.id}}">Excluir</a>
-      </td>
-    </tr>
-    {{/each}}
-  </tbody>
-</table>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-  fetch('/grafico')
-    .then(res => res.json())
-    .then(dados => {
-      const ctx = document.getElementById('graficoGastos').getContext('2d')
-      const labels = dados.map(item => item._id)
-      const valores = dados.map(item => item.total)
-      new Chart(ctx, {
-        type: 'pie',
-        data: {
-          labels: labels,
-          datasets: [{
-            label: 'Gastos por Categoria',
-            data: valores,
-            backgroundColor: ['#f00', '#0f0', '#00f', '#ff0', '#0ff']
-          }]
-        }
-      })
-    })
-</script> --}}

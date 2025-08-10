@@ -10,12 +10,12 @@ exports.tela_principal = async (req, res) => {
     req.usuario = usuario;
 
     const lista = await gastos.lista()
-    const saldo = await gastos.saldo()
+    const saldoAtual = await gastos.saldo(usuario.email)
 
     const contexto = {
         titulo_pagina: "Controle de Gastos",
         transacoes: lista,
-        saldo: saldo
+        saldo: saldoAtual
     }
 
     res.render('index', contexto)
@@ -50,7 +50,7 @@ exports.exportaCSV = async (req, res) => {
     const dados = await gastos.lista()
 
     const csv = json2csv(dados, {
-        fields: ['id', 'descricao', 'tipo', 'categoria', 'valor', 'data'],
+        fields: ['id', 'descricao', 'tipo', 'categoria', 'valor'],
         delimiter: ';'
     })
 

@@ -3,7 +3,7 @@ body {
   padding: 0px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   background-color: #F5F6FA;
-  margin-top: 6%;
+  margin-top: 1%;
 }
 
 a {
@@ -41,7 +41,7 @@ color: #34495E;
 }
 
 .table-transacoes{
-  height: 565px;
+  height: 620px;
 }
 
 .table-scrow{
