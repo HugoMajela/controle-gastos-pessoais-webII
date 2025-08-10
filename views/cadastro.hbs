@@ -1,6 +1,6 @@
 <div class="container mt-5">
-    <div class="card p-4 shadow-sm" style="max-width: 700px; margin: auto;">
-        <h2 class="text-center mb-4">Cadastro</h2>
+    <div class="card p-4 shadow-sm rounded-5" style="max-width: 700px; margin: auto;">
+        <h2 class="text-center mb-4 font-logo">Cadastro</h2>
 
         {{#if erro}}
         <div class="alert alert-danger">{{erro}}</div>
@@ -31,5 +31,6 @@
                 <button type="submit" class="btn btn-success px-5">Cadastrar</button>
             </div>
         </form>
+        <p class="mt-3 text-center">Já tem conta? <a href="/usuario/login">Entrar</a></p>
     </div>
 </div>

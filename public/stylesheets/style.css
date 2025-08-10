@@ -1,8 +1,56 @@
 body {
-  padding: 50px;
+  margin: 0;
+  padding: 0px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #F5F6FA;
+  margin-top: 6%;
 }
 
 a {
-  color: #00B7FF;
+  color: #7ed957;
+}
+
+.font-logo{
+  font-family: "League Spartan", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 800;
+  font-style: normal;
+}
+
+.container-login{
+background-color: #A9DFBF;
+color: #34495E;
+
+}
+
+.img-login{
+  width: 200px;
+}
+
+.card-login{
+  max-width: 800px;
+  height: 400px;
+  margin: auto;
+}
+
+.footer{
+ padding: 15px 0; color: #959595; 
+ position: fixed; 
+ width: 100%;
+ bottom: 0;
+}
+
+.table-transacoes{
+  height: 565px;
+}
+
+.table-scrow{
+  overflow-y: auto; 
+}
+
+.cabecalho-fixed {
+  position: sticky;
+  top: 0;
+  background-color: white;
+  z-index: 1;
 }

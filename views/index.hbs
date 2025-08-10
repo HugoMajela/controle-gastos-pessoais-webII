@@ -1,4 +1,75 @@
-<h1>Controle de Gastos</h1>
+<div class="container mx-auto">
+  <div class="row g-4">
+    <!-- Coluna dos botões -->
+    <div class="col-md-3">
+      <div class="card p-4 shadow-sm rounded-5">
+        <a class="btn btn-success mb-3" href="/nova">+ Nova Transação</a>
+        <a class="btn btn-secondary mb-3" href="/exportar">Exportar CSV</a>
+        <a href="/usuario/logout" class="btn btn-danger mb-3">Logout</a>
+      </div>
+
+      <div class="card p-4 shadow-sm rounded-5 mt-3">
+        <p class="text-center">Grafico de gastos</p>
+        <canvas id="graficoGastos" width="400" height="200"></canvas>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+          <script>
+            fetch('/grafico')
+              .then(res => res.json())
+              .then(dados => {
+                const ctx = document.getElementById('graficoGastos').getContext('2d')
+                const labels = dados.map(item => item._id)
+                const valores = dados.map(item => item.total)
+                new Chart(ctx, {
+                  type: 'pie',
+                  data: {
+                    labels: labels,
+                    datasets: [{
+                      label: 'Gastos por Categoria',
+                      data: valores,
+                      backgroundColor: ['#f00', '#0f0', '#00f', '#ff0', '#0ff']
+                    }]
+                  }
+                })
+              })
+          </script>
+      </div>
+    </div>
+
+    <!-- Coluna da tabela -->
+    <div class="col-md-8">
+      <div class="card p-4 shadow-sm rounded-5 table-transacoes table-scrow">
+        <table class="table">
+          <thead class="cabecalho-fixed">
+            <tr>
+              <th>Descrição</th>
+              <th>Categoria</th>
+              <th>Valor (R$)</th>
+              <th>Observações</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each transacoes}}
+              <tr>
+                <td>{{this.descricao}}</td>
+                <td>{{this.categoria}}</td>
+                <td>{{this.valor}}</td>
+                <td>{{this.observacao}}</td>
+                <td>
+                  <a class="btn btn-danger btn-sm" href="/excluir/{{this.id}}">Excluir</a>
+                </td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+{{!-- <h1>Controle de Gastos</h1>
 <h3>Saldo Atual: R$ {{saldo}}</h3>
 
 <a class="btn btn-success mb-3" href="/nova">+ Nova Transação</a>
@@ -52,4 +123,4 @@
         }
       })
     })
-</script>
+</script> --}}
